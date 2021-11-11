@@ -1,0 +1,13 @@
+#+title: BDDA Knowledge Graphs
+#+date: <2021-11-11 Thu>
+#+author: Clifford Wulfman
+#+email: cliff@agilehumanities.ca
+
+The Black Death Digital Archive maintains, as one of its primary assets, a repository of knowledge graphs we believe to be of use to researchers studying the Second Plague.
+
+The repository is in an early stage of formation and currently contains only two data sets: references to plague in the Turkish Archives, and a graph representation of the Biraben data table compiled by Krauer and Schmid.  We are counting on the BDDA community to provide more.
+
+* Organization
+  One of the primary aims of the BDDA is to use linked open data principles to integrate data from different sources.  One of the building blocks is a common gazetteer of known, named places.  We will be working with the [[https://whgazetteer.org][World Historical Gazetteer]] to integrate our data into their resource; as an intermediate step, we are compiling a BDDA gazetteer to integrate our data sets.
+
+  (Please see our data-modeling repository for information about how the BDDA models references to places in historical sources.)
