@@ -1,0 +1,205 @@
+#+options: ':nil *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline
+#+options: author:t broken-links:nil c:nil creator:nil
+#+options: d:(not "LOGBOOK") date:t e:t email:nil f:t inline:t num:t
+#+options: p:nil pri:nil prop:nil stat:t tags:t tasks:t tex:t
+#+options: timestamp:t title:t toc:t todo:t |:t
+#+title: BDDA: Biraben
+
+#+date: <2021-11-29 Mon>
+#+author: Clifford E. Wulfman
+#+email: cwulfman@princeton.edu
+#+language: en
+#+select_tags: export
+#+exclude_tags: noexport
+#+creator: Emacs 27.2 (Org mode 9.4.4)
+
+
+Jean-Noël Biraben's 1975 /Les hommes et la peste en France et dans les
+pays européens et méditerranéens/ is an often cited source, and his
+tabular appendix of second plague occurances has been digitized several times.
+These digitization efforts have been criticized (citations), not for
+their inaccuracy but for the too-easy quantification of Biraben's
+appendices, whose entries are not easily contextualized.
+
+We have taken the table created by Krauer and Schmid and used it as
+the source of our graphs.  Mindful of the critique offered by Roosen
+and Curtis, we have articulated this data into several graphs so that
+context can be established for statements.
+
+The first graph contains statements directly from Biraben's table (as
+captured by Krauer and Schmid):
+
+| colname   | information                                                                                                                                                             |
+|-----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id        | unique observation id                                                                                                                                                   |
+| chapter   | chapter, only available for Biraben dataset                                                                                                                             |
+| year      | year of outbreak mention                                                                                                                                                |
+| name_orig | name as given in original dataset                                                                                                                                       |
+| certain   | indicates whether the entry is certain (1) or uncertain (0, corresponding to an entry with a question mark in the original dataset), only available for Biraben dataset |
+
+For example,
+
+| id | chapter | year | name_orig | certain |
+|----+---------+------+-----------+---------|
+|  1 | France  | 1347 | Aix       |       1 |
+
+
+
+
+As Roosen and Curtis point out:
+
+#+begin_quote
+Three previously published graphs display the same data set (Figures
+4–6) and yet, peculiarly, present the data differently. Büntgen et
+al. described the data as plague outbreaks, Schmid et al. referred to
+the data as plague incidence, and Voigtländer and Voth regarded the
+Biraben data as plague epidemics. These 3 terms are not
+interchangeable. The lack of clarity on what the data set represents
+has led to the drawing of false conclusions. ...  Which of the 3 graphs
+uses the correct terminology? In fact, none of them do. The data
+collected by Biraben represent the availability of sources mentioning
+plague and not the severity or pervasiveness of the disease in any
+given year. More narrowly defined, the data set represents those
+sources Biraben was able to find in the timespan of researching his
+book while working in Paris.
+#+end_quote
+
+Biraben himself describes his appendix as "Liste nominative et
+chronologique des localités et pays touchés chacque année par la
+peste..."  That "touchés" is suggestive but hardly detailed; as Roosen
+and Curtis suggest (a bit harshly), the appendix (which is not, after
+all, the main element of Biraben's work) is simply a secondary
+compilation of /reports/ of plague.
+
+We must, then, represent not a statement of fact:
+
+#+begin_quote
+There certainly was plague in Aix in 1347.
+#+end_quote
+
+But the much more provisional statement:
+
+#+begin_quote
+According to Biraben, there is evidence for plague in a place called
+Aix in 1347.
+#+end_quote
+
+In the Semantic Web, context for statements is established through the
+use of /named graphs/. (More on this in a moment.)
+
+We begin by harmonizing https://disease-ontology.org with the CRM.
+
+The disease ontology classifies /bubonic plague/ as
+<http://purl.obolibrary.org/obo/DOID_10773>:
+
+#+begin_quote
+A plague that results_in infection located_in lymph node producing a
+bubo, which is an inflamed, necrotic, and hemorrhagic lymphoid
+tissue. The infection has_symptom enlarged, tender lymph nodes,
+has_symptom fever, has_symptom chills and has_symptom prostration. [
+http://purl.obolibrary.org/obo/ECO_0007638
+url:https://en.wikipedia.org/wiki/Bubonic_plague ]
+#+end_quote
+
+In the CRM, /disease/ is a kind of event, so we can extend the
+ontology to declare that DOID_10773 is a subclass of the
+already-existing CRM class E5_Event:
+
+#+begin_src n3
+  @prefix obo: <http://purl.obolibrary.org/obo/> .
+  @prefix ecrm: <http://erlangen-crm.org/200717/> .
+  @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+  @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+  @prefix bdda: <http://bdda.org/schema#> .
+
+  bdda:disease rdfs:subClassOf ecrm:E5_Event ;
+
+  obo:DOID_10773 a bdda:disease ;
+		     rdfs:label "bubonic plague" .
+#+end_src
+
+
+And in CRM, an Event is a kind of Spacetime Volume:
+
+#+begin_quote
+This class comprises 4 dimensional point sets (volumes) in physical
+spacetime (in contrast to mathematical models of it) regardless their
+true geometric forms. They may derive their identity from being the
+extent of a material phenomenon or from being the interpretation of an
+expression defining an extent in spacetime. Intersections of instances
+of E92 Spacetime Volume, E53 Place and E52 Timespan are also regarded
+as instances of E92 Spacetime Volume. An instance of E92 Spacetime
+Volume is either contiguous or composed of a finite number of
+contiguous subsets. Its boundaries may be fuzzy due to the properties
+of the phenomena it derives from or due to the limited precision up to
+which defining expression can be identified with a real extent in
+spacetime. The duration of existence of an instance of E92 Spacetime
+Volume is its projection on time.
+#+end_quote
+
+Thus the CRM allows us to create a named graph in which we can make
+the following statements, in the context of the graph:
+
+
+#+begin_src n3
+  biraben_1 a disease:DOID_10773 ;
+	    P160_has_temporal_projection E52_Timespan ;
+	    P161_has_spatial_projection E53_Place .
+#+end_src
+
+** Places and Toponyms
+   In working with primary sources, it is not enough to extract the
+   names of towns and villages and link them to geo-referenced places
+   in a modern gazetteer (though this is challenging enough).
+   Equating a place named in an historical document with a specific
+   spatial area is well known to be problematic.  Names change; the
+   place defined by a name changes.  Few ontologies (formal languages
+   that describe categories in a subject area, their properties, and
+   the relation between them) in use in the digital humanities today
+   are rich enough to enable these sorts of statements, but this level
+   of detail is crucial for the BDDA project.
+
+   Biraben's tables include the names of places he found in his
+   sources (he regularized them orthographically).  Krauer and Schmid
+   have painstakingly mapped those toponyms to places explicitly
+   represented in digital gazetteers and have then used the GIS
+   service to compile various kinds of geographic data about the
+   places: modern names; topographical classification; bounding boxes,
+   geo-political context.  Convenient as they may be for certain kinds
+   of analysis, these additional data are not Biraben's; they are
+   interpretations added to the data Biraben extracted from his
+   primary sources.
+
+   Biraben's data says only this:
+
+   #+begin_example
+   there is evidence for plague in a place called Aix.
+   #+end_example
+
+   Our CRM representation is therefore:
+
+   #+begin_src n3
+     biraben_1 has_spatial_projection [a Place ;
+				       is_identified_by "Aix"] .
+   #+end_src
+
+
+   Because we will want to talk about that place and that name, we
+   represent them explicitly:
+
+   #+begin_src n3
+     toponym_aix a Appellation ;
+		 has_symbolic_content "Aix" .
+
+     place_x a Place ;
+	     is_identified_by toponym_aix .
+
+     biraben_1 has_temporal_projection place_x .
+   #+end_src
+
+   This indirection makes our queries more unwieldy but more honest:
+
+   #+begin_quote
+   What are the disease events Biraben identifies as having occurred
+   in a place (or places) named Aix?
+   #+end_quote
