@@ -1,0 +1,23 @@
+@prefix ecrm: <http://erlangen-crm.org/200717/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix wd: <https://www.wikidata.org/wiki/> .
+@prefix mesh: <http://id.nlm.nih.gov/mesh/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix efrbroo: <http://erlangen-crm.org/efrbroo/> .
+@prefix bdda: <http://bdda.org/schema#> .
+
+wd:Q217519 a ecrm:E77_Persistent_Item ;
+	   rdfs:label "bubonic plague" .
+
+bdda:disease rdfs:subClassOf ecrm:E5_Event .
+
+obo:DOID_10773 a bdda:disease ;
+		     rdfs:label "bubonic plague" .
+
+
+mesh:D004196 a ecrm:E5_Event ;
+	     rdfs:label "Disease Outbreak" .
+
+obo:DOID_10773 a ecrm:E2_Temporal_Entity ;
+	       rdfs:label "bubonic plague" .
