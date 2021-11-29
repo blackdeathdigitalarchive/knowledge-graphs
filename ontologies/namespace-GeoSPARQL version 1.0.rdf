@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>												
+						<rdf:RDF
+							  xml:base="http://www.opengis.net/ont/geosparql#"
+						    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+						    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+						    xmlns:owl="http://www.w3.org/2002/07/owl#"
+						    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+						    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+						    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+						    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+						  >
+						  <owl:Ontology rdf:about="http://www.opengis.net/ont/geosparql#">
+						    <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Exported from OntoME: GeoSPARQL version 1.0</owl:versionInfo>
+						        <rdfs:comment xml:lang="en">Version 1.0
+Approval Date: 2012-04-27
+Publication Date: 2012-09-10</rdfs:comment>
+							<rdfs:label xml:lang="en">GeoSPARQL version 1.0</rdfs:label>
+						    </owl:Ontology><owl:Class rdf:about="http://www.opengis.net/ont/geosparql#Feature">
+		    <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+		    >Feature</skos:notation>
+		    <rdfs:comment xml:lang="en" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">This class represents the top-level feature type. This class is equivalent to GFI_Feature defined in ISO 19156:2011, and it is superclass of all feature types.</rdfs:comment>
+					    <rdfs:label xml:lang="en">Feature</rdfs:label><rdfs:subClassOf><owl:Class rdf:about="http://www.opengis.net/ont/geosparql#SpatialObject"/></rdfs:subClassOf></owl:Class>   <owl:Class rdf:about="http://www.opengis.net/ont/geosparql#Geometry">
+		    <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+		    >Geometry</skos:notation>
+		    <rdfs:comment xml:lang="en" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The class represents the top-level geometry type. This class is equivalent to the UML class GM_Object defined in ISO 19107, and it is superclass of all geometry types.</rdfs:comment>
+					    <rdfs:label xml:lang="en">Geometry</rdfs:label><rdfs:subClassOf><owl:Class rdf:about="http://www.opengis.net/ont/geosparql#SpatialObject"/></rdfs:subClassOf></owl:Class>   <owl:Class rdf:about="http://www.opengis.net/ont/geosparql#gmlLiteral">
+		    <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+		    >gmlLiteral</skos:notation>
+		    <rdfs:comment xml:lang="en" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The datatype of GML literal values.</rdfs:comment>
+					    <rdfs:label xml:lang="en">GML literal</rdfs:label></owl:Class>   <owl:Class rdf:about="http://www.opengis.net/ont/geosparql#SpatialObject">
+		    <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+		    >SpatialObject</skos:notation>
+		    <rdfs:comment xml:lang="en" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">The class spatial-object represents everything that can have a spatial representation. It is superclass of feature and geometry.    </rdfs:comment>
+					    <rdfs:label xml:lang="en">Spatial Object</rdfs:label></owl:Class>   <owl:Class rdf:about="http://www.opengis.net/ont/geosparql#wktLiteral">
+		    <skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+		    >wktLiteral</skos:notation>
+		    <rdfs:comment xml:lang="en" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A Well-known Text serialization of a geometry object.</rdfs:comment>
+					    <rdfs:label xml:lang="en">Well-known Text Literal</rdfs:label></owl:Class><owl:ObjectProperty rdf:about="http://www.opengis.net/ont/geosparql#isEmpty">
+				<rdfs:range rdf:resource="https://ontome.net/ns/xmlschemaboolean"/>
+				<rdfs:comment xml:lang="en">(true) if this geometric object is the empty Geometry. If true, then this geometric object represents the empty point set for the coordinate space.</rdfs:comment>
+				<rdfs:label xml:lang="en">is empty</rdfs:label>
+				<skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isEmpty</skos:notation>
+				<rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+				</owl:ObjectProperty>   <owl:ObjectProperty rdf:about="http://www.opengis.net/ont/geosparql#asGML">
+				<rdfs:range rdf:resource="http://www.opengis.net/ont/geosparql#gmlLiteral"/>
+				<rdfs:comment xml:lang="en">The GML serialization of a geometry.</rdfs:comment>
+				<rdfs:label xml:lang="en">as GML</rdfs:label>
+				<skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">asGML</skos:notation>
+				<rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+				</owl:ObjectProperty>   <owl:ObjectProperty rdf:about="http://www.opengis.net/ont/geosparql#hasDefaultGeometry">
+				<rdfs:range rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+				<rdfs:comment xml:lang="en">The default geometry to be used in spatial calculations, usually the most detailed geometry.</rdfs:comment>
+				<rdfs:label xml:lang="en">has Default Geometry</rdfs:label>
+				<skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasDefaultGeometry</skos:notation>
+				<rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Feature"/>
+				</owl:ObjectProperty>   <owl:ObjectProperty rdf:about="http://www.opengis.net/ont/geosparql#coordinateDimension">
+				<rdfs:range rdf:resource="https://ontome.net/ns/xmlschemaint"/>
+				<rdfs:comment xml:lang="en">The number of measurements or axes needed to describe the position of this geometry in a coordinate system.</rdfs:comment>
+				<rdfs:label xml:lang="en">coordinate dimension</rdfs:label>
+				<skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">coordinateDimension</skos:notation>
+				<rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+				</owl:ObjectProperty>   <owl:ObjectProperty rdf:about="http://www.opengis.net/ont/geosparql#hasGeometry">
+				<rdfs:range rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+				<rdfs:comment xml:lang="en">A spatial representation for a given feature.</rdfs:comment>
+				<rdfs:label xml:lang="en">has Geometry</rdfs:label>
+				<skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasGeometry</skos:notation>
+				<rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Feature"/>
+				</owl:ObjectProperty>   <owl:ObjectProperty rdf:about="http://www.opengis.net/ont/geosparql#hasSerialization">
+				<rdfs:range rdf:resource="https://ontome.net/ns/xmlschemastring"/>
+				<rdfs:comment xml:lang="en">Connects a geometry object with its text-based serialization.</rdfs:comment>
+				<rdfs:label xml:lang="en">has serialization</rdfs:label>
+				<skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hasSerialization</skos:notation>
+				<rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+				</owl:ObjectProperty>   <owl:ObjectProperty rdf:about="http://www.opengis.net/ont/geosparql#asWKT">
+				<rdfs:range rdf:resource="http://www.opengis.net/ont/geosparql#wktLiteral"/>
+				<rdfs:comment xml:lang="en">The WKT serialization of a geometry.</rdfs:comment>
+				<rdfs:label xml:lang="en">as WKT</rdfs:label>
+				<skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">asWKT</skos:notation>
+				<rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+				</owl:ObjectProperty>   <owl:ObjectProperty rdf:about="http://www.opengis.net/ont/geosparql#dimension">
+				<rdfs:range rdf:resource="https://ontome.net/ns/xmlschemaint"/>
+				<rdfs:comment xml:lang="en">The topological dimension of this geometric object, which must be less than or equal to the coordinate dimension. In non-homogeneous collections, this is the largest topological dimension of the contained objects.</rdfs:comment>
+				<rdfs:label xml:lang="en">dimension</rdfs:label>
+				<skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dimension</skos:notation>
+				<rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+				</owl:ObjectProperty>   <owl:ObjectProperty rdf:about="http://www.opengis.net/ont/geosparql#spatialDimension">
+				<rdfs:range rdf:resource="https://ontome.net/ns/xmlschemaint"/>
+				<rdfs:comment xml:lang="en">The spatial dimension is the dimension of the spatial portion of the direct positions (coordinate tuples) used in the definition of this geometric object. If the direct positions do not carry a measure coordinate, this will be equal to the coordinate dimension.</rdfs:comment>
+				<rdfs:label xml:lang="en">spatial dimension</rdfs:label>
+				<skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">spatialDimension</skos:notation>
+				<rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+				</owl:ObjectProperty>   <owl:ObjectProperty rdf:about="http://www.opengis.net/ont/geosparql#isSimple">
+				<rdfs:range rdf:resource="https://ontome.net/ns/xmlschemaboolean"/>
+				<rdfs:comment xml:lang="en">(true) if this geometric object has no anomalous geometric points, such as self intersection or self tangency.</rdfs:comment>
+				<rdfs:label xml:lang="en">is simple</rdfs:label>
+				<skos:notation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">isSimple</skos:notation>
+				<rdfs:domain rdf:resource="http://www.opengis.net/ont/geosparql#Geometry"/>
+				</owl:ObjectProperty></rdf:RDF>
