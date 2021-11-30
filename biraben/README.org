@@ -21,9 +21,9 @@ These digitization efforts have been criticized (citations), not for
 their inaccuracy but for the too-easy quantification of Biraben's
 appendices, whose entries are not easily contextualized.
 
-We have taken the table created by Krauer and Schmid and used it as
+We have taken the table created by Krauer and Schmid[fn:1] and used it as
 the source of our graphs.  Mindful of the critique offered by Roosen
-and Curtis, we have articulated this data into several graphs so that
+and Curtis[fn:2], we have articulated this data into several graphs so that
 context can be established for statements.
 
 The first graph contains statements directly from Biraben's table (as
@@ -34,34 +34,32 @@ captured by Krauer and Schmid):
 | id        | unique observation id                                                                                                                                                   |
 | chapter   | chapter, only available for Biraben dataset                                                                                                                             |
 | year      | year of outbreak mention                                                                                                                                                |
-| name_orig | name as given in original dataset                                                                                                                                       |
+| name-orig  | name as given in original dataset                                                                                                                                       |
 | certain   | indicates whether the entry is certain (1) or uncertain (0, corresponding to an entry with a question mark in the original dataset), only available for Biraben dataset |
 
 For example,
 
-| id | chapter | year | name_orig | certain |
+| id | chapter | year | name-orig | certain |
 |----+---------+------+-----------+---------|
 |  1 | France  | 1347 | Aix       |       1 |
-
-
 
 
 As Roosen and Curtis point out:
 
 #+begin_quote
-Three previously published graphs display the same data set (Figures
-4–6) and yet, peculiarly, present the data differently. Büntgen et
+Three previously published graphs display the same data set ... and
+yet, peculiarly, present the data differently. Büntgen et
 al. described the data as plague outbreaks, Schmid et al. referred to
 the data as plague incidence, and Voigtländer and Voth regarded the
 Biraben data as plague epidemics. These 3 terms are not
 interchangeable. The lack of clarity on what the data set represents
-has led to the drawing of false conclusions. ...  Which of the 3 graphs
-uses the correct terminology? In fact, none of them do. The data
-collected by Biraben represent the availability of sources mentioning
-plague and not the severity or pervasiveness of the disease in any
-given year. More narrowly defined, the data set represents those
-sources Biraben was able to find in the timespan of researching his
-book while working in Paris.
+has led to the drawing of false conclusions. ...  Which of the 3
+graphs uses the correct terminology? In fact, none of them do. The
+data collected by Biraben represent the availability of sources
+mentioning plague and not the severity or pervasiveness of the disease
+in any given year. More narrowly defined, the data set represents
+those sources Biraben was able to find in the timespan of researching
+his book while working in Paris.
 #+end_quote
 
 Biraben himself describes his appendix as "Liste nominative et
@@ -203,3 +201,43 @@ the following statements, in the context of the graph:
    What are the disease events Biraben identifies as having occurred
    in a place (or places) named Aix?
    #+end_quote
+
+   Or, in SPARQL,
+
+   #+begin_src sparql
+     prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+     prefix bdda: <http://bdda.org/schema#>
+     prefix  obo: <http://purl.obolibrary.org/obo/>
+     prefix ecrm: <http://erlangen-crm.org/200717/>
+     prefix disease: <http://purl.obolibrary.org/obo/> 
+
+     prefix efrbroo: <http://erlangen-crm.org/efrbroo/> 
+     prefix event: <http://bdda.org/events/> 
+     prefix place: <http://bdda.org/places/> 
+
+     prefix timespan: <http://bdda.org/timespans/> 
+     prefix toponym: <http://bdda.org/toponyms/> 
+     prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+
+     select ?event ?place ?date from <http://biraben.org/> where {
+	 ?toponym ecrm:P190_has_symbolic_content "Aix". 
+	 ?place ecrm:P87_is_identified_by ?toponym .
+	 ?event a obo:DOID_10773 .
+	 ?event ecrm:P7_took_place_at ?place .
+	 ?event ecrm:P4_has_time_span ?span .
+	 ?span ecrm:P82a_begin_of_the_begin ?date.
+     }
+   #+end_src
+
+* Footnotes
+
+[fn:1] Krauer, Fabienne, and Boris V. Schmid. “Mapping the Plague
+through Natural Language Processing.” MedRxiv, April 30, 2021,
+2021.04.27.21256212. https://doi.org/10.1101/2021.04.27.21256212.
+ 
+
+[fn:2] Roosen, Joris, and Daniel R. Curtis. “Dangers of Noncritical
+Use of Historical Plague Data - Volume 24, Number 1—January 2018 -
+Emerging Infectious Diseases Journal - CDC.” Accessed October
+18, 2021. https://doi.org/10.3201/eid2401.170477.
+ 
