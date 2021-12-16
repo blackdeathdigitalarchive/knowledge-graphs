@@ -227,7 +227,7 @@ the following statements, in the context of the graph:
 	 ?event ecrm:P4_has_time_span ?span .
 	 ?span ecrm:P82a_begin_of_the_begin ?date.
      }
-   #+end_src
+   #+End_src
 
 * Footnotes
 

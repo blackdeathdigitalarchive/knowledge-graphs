@@ -1,4 +1,4 @@
-v@prefix disease: <http://purl.obolibrary.org/obo/> .
+@prefix disease: <http://purl.obolibrary.org/obo/> .
 @prefix ecrm: <http://erlangen-crm.org/200717/> .
 @prefix efrbroo: <http://erlangen-crm.org/efrbroo/> .
 @prefix event: <http://bdda.org/events/> .
