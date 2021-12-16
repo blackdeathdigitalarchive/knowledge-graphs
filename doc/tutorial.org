@@ -1,0 +1,131 @@
+#+TITLE: Using the BDDA Knowledge Graphs
+
+* Introduction
+  One major aim of the Black Death Digital Archive is to create an
+  interdisciplinary knowledge base of information about the Second
+  Plague.  The BDDA is creating this knowledge base as a set of
+  [[https://en.wikipedia.org/wiki/Knowledge_graph][knowledge graphs]] that are integrated with the [[https://lod-cloud.net][linked open data
+  cloud]], using the [[https://en.wikipedia.org/wiki/Resource_Description_Framework][Resource Description Framework (RDF)]] and an
+  interdisciplinary ontology.
+
+  The BDDA knowledge graphs are platform independent, and researchers
+  are encouraged to incorporate them in their own [[https://en.wikipedia.org/wiki/Graph_database][graph databases]].
+  For those who are unfamiliar with these technologies, this tutorial
+  shows how to install [[https://www.ontotext.com/products/graphdb/][GraphDB]], a popular RDF database; how to
+  load a BDDA knowledge graph into GraphDB; and how to perform a
+  simple query using SPARQL.
+
+  This tutorial presumes a degree of comfort with installing software
+  from the Internet and some familiarity with Github.
+
+* Getting Started
+  Begin by cloning or downloading the BDDA knowledge-graphs repository
+  from Github (https://github.com/blackdeathdigitalarchive/knowledge-graphs).
+  
+  There are many RDF database platforms available; we're using
+  GraphDB-Free in this tutorial because it is easy to install and
+  configure. Instructions for downloading and installing GraphDB-Free
+  can be found here:
+
+  #+begin_quote
+  https://www.ontotext.com/products/graphdb/graphdb-free/
+  #+end_quote
+
+  Follow the instructions to get the application running on your
+  machine.
+
+* Configuring and Deploying a Graph Database
+  Once GraphDB is up and running on your machine, you'll need to
+  create a repository:
+
+  - Click on the /Setup/ icon in the left-hand panel of the
+    application's main screen; select /Repositories/, and then, on the
+    Repository screen, select /Create new repository/.
+
+  - Select the GraphDB Free repository type.
+
+  - Give the repository a name (a Repository ID), like /BDDA/.
+
+  - In the /Inference and Validation/ section of the configuration
+    form, select /OWL-Max (Optimized)/ from the Ruleset pull-down
+    menu, and uncheck the /Disable owl:sameAs/ check box.  You can
+    leave the rest of the defaults as they are.
+
+  - Select the /Save/ button
+
+  - You will be taken back to the /Repositories/ screen; click on the
+    connection icon to the left of your repository's name to activate
+    it.
+
+* Loading Graphs
+  Now you will load some BDDA graphs into your new repository.
+
+  - Click on the /Import/ icon in the left-hand panel of the main
+    screen and select /RDF/.
+
+  - Use the /Upload RDF files/ button to upload the graphs into
+    GraphDB so that they may be imported:
+
+    - Import all the files in the ontology folder;
+
+    - Import /general.ttl/, /bdda_toponyms.ttl/, and
+      /bdda_gazetteer.ttl/;
+
+    - Import /biraben.ttl/ from the biraben folder.
+
+    - Select all of the files except biraben.ttl and click on /Import/.
+
+    - In the /Import settings/ menu, leave the defaults as they are
+      and click on /Import/.
+
+    - Now import the biraben graph. Activate the checkbox next to
+      /biraben.ttl/ and make sure all the rest of the files are
+      de-selected. Click on the /Import/ button.
+
+    - This time, in the /Import settings/ menu, select the /Named
+      Graph/ radio button and, in the field below the buttons, enter
+      the following:
+
+      #+begin_example
+      https://github.com/blackdeathdigitalarchive/knowledge-graphs/blob/main/biraben/
+      #+end_example
+
+      Then click on the /Import/ button.
+
+* Exploring the Graph
+  Now you can use GraphDB to explore the knowledge base.  Click on the
+  /Explore/ icon in the left-hand panel of the application's main
+  screen and select /Graphs overview/; then click on the biraben
+  graph.  You will see a long list of triple; try selecting one of the
+  subjects, like /event:biraben_event_1/ and then selecting /Visual
+  graph/.  Explore the resulting graph. (The GraphDB documentation
+  provides guidance and tutorials.)
+
+* Making Queries
+  Finally, try querying the knowledge graph with SPARQL.  Try this
+  query from the [[https://github.com/blackdeathdigitalarchive/knowledge-graphs/tree/main/biraben][biraben overview]]: "What are the bubonic plague
+  disease events Biraben identifies as having occurred in a place (or
+  places) named Aix?"
+
+  #+begin_src n3
+    prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    prefix bdda: <http://bdda.org/schema#>
+    prefix  obo: <http://purl.obolibrary.org/obo/>
+    prefix ecrm: <http://erlangen-crm.org/200717/>
+    prefix disease: <http://purl.obolibrary.org/obo/> 
+    prefix efrbroo: <http://erlangen-crm.org/efrbroo/> 
+    prefix event: <http://bdda.org/events/> 
+    prefix place: <http://bdda.org/places/> 
+    prefix timespan: <http://bdda.org/timespans/> 
+    prefix toponym: <http://bdda.org/toponyms/> 
+    prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+
+    select * where { 
+             ?toponym ecrm:P190_has_symbolic_content "Aix". 
+             ?place ecrm:P87_is_identified_by ?toponym .
+             ?event a obo:DOID_10773 .
+             ?event ecrm:P7_took_place_at ?place .
+             ?event ecrm:P4_has_time_span ?span .
+             ?span ecrm:P82a_begin_of_the_begin ?date.
+    } limit 100 
+  #+end_src
